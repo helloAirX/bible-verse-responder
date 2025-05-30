@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bible Verse Responder</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255 255 255 / 0.1);
+      border-radius: 15px;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px 25px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin-bottom: 20px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: 0 0 10px #ffd700;
+      background: rgba(255 255 255 / 0.15);
+      color: #fff;
+    }
+
+    button {
+      background: #ffd700;
+      border: none;
+      padding: 14px 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #4b2e00;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #ffea47;
+      transform: scale(1.05);
+    }
+
+    #verse, #reference {
+      margin-top: 25px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    #verse.visible, #reference.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #verse {
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    #reference {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 6px;
+      letter-spacing: 0.8px;
+      color: #ffeb3b;
+      text-shadow: 0 0 6px rgba(255, 235, 59, 0.9);
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      input[type="text"], button {
+        font-size: 1rem;
+        padding: 12px 15px;
+      }
+      #verse {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Bible Verse Prompt-Responder</h1>
+    <input type="text" id="userInput" placeholder="How are you feeling or what do you want to know?" autocomplete="off" />
+    <button onclick="respond()">Get Verse</button>
+
+    <div id="verse"></div>
+    <div id="reference"></div>
+  </div>
+
+  <script>
+    const verses = {
+      angry: {
+        text: "Be angry and do not sin; do not let the sun go down on your anger.",
+        ref: "Ephesians 4:26"
+      },
+      anxious: {
+        text: "Do not be anxious about anything, but in every situation, by prayer and petition, present your requests to God.",
+        ref: "Philippians 4:6"
+      },
+      tired: {
+        text: "Come to me, all who are weary and burdened, and I will give you rest.",
+        ref: "Matthew 11:28"
+      },
+      afraid: {
+        text: "Do not fear, for I am with you; do not be dismayed, for I am your God.",
+        ref: "Isaiah 41:10"
+      },
+      confused: {
+        text: "Trust in the Lord with all your heart and lean not on your own understanding.",
+        ref: "Proverbs 3:5"
+      },
+      thankful: {
+        text: "Give thanks in all circumstances; for this is God’s will for you in Christ Jesus.",
+        ref: "1 Thessalonians 5:18"
+      }
+    };
+
+    function respond() {
+      const input = document.getElementById("userInput").value.toLowerCase().trim();
+      const verseDiv = document.getElementById("verse");
+      const refDiv = document.getElementById("reference");
+
+      // Remove previous animation classes
+      verseDiv.classList.remove("visible");
+      refDiv.classList.remove("visible");
+
+      if (!input) {
+        verseDiv.textContent = "";
+        refDiv.textContent = "";
+        return;
+      }
+
+      let found = false;
+      for (const key in verses) {
+        if (input.includes(key)) {
+          verseDiv.textContent = `"${verses[key].text}"`;
+          refDiv.textContent = verses[key].ref;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        verseDiv.textContent = "Sorry, I don't have a verse for that yet. Try words like 'angry', 'tired', or 'anxious'.";
+        refDiv.textContent = "";
+      }
+
+      // Add fade-in animation classes after slight delay for smoothness
+      setTimeout(() => {
+        verseDiv.classList.add("visible");
+        refDiv.classList.add("visible");
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>
