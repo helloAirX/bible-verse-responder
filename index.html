@@ -160,42 +160,44 @@
       }
     };
 
-    function respond() {
-      const input = document.getElementById("userInput").value.toLowerCase().trim();
-      const verseDiv = document.getElementById("verse");
-      const refDiv = document.getElementById("reference");
+   function respond() {
+  const input = document.getElementById("userInput").value.toLowerCase().trim();
+  const verseDiv = document.getElementById("verse");
+  const refDiv = document.getElementById("reference");
 
-      // Remove previous animation classes
-      verseDiv.classList.remove("visible");
-      refDiv.classList.remove("visible");
+  // Remove previous animation classes
+  verseDiv.classList.remove("visible");
+  refDiv.classList.remove("visible");
 
-      if (!input) {
-        verseDiv.textContent = "";
-        refDiv.textContent = "";
-        return;
-      }
+  if (!input) {
+    verseDiv.textContent = "";
+    refDiv.textContent = "";
+    return;
+  }
 
-      let found = false;
-      for (const key in verses) {
-        if (input.includes(key)) {
-          verseDiv.textContent = `"${verses[key].text}"`;
-          refDiv.textContent = verses[key].ref;
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) {
-        verseDiv.textContent = "Sorry, I don't have a verse for that yet. Try words like 'angry', 'tired', or 'anxious'.";
-        refDiv.textContent = "";
-      }
-
-      // Add fade-in animation classes after slight delay for smoothness
-      setTimeout(() => {
-        verseDiv.classList.add("visible");
-        refDiv.classList.add("visible");
-      }, 100);
+  let found = false;
+  for (const key in verses) {
+    if (input.includes(key)) {
+      verseDiv.textContent = `"${verses[key].text}"`;
+      refDiv.textContent = verses[key].ref;
+      found = true;
+      break;
     }
+  }
+
+  if (!found) {
+    verseDiv.textContent = `"For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you, plans to give you hope and a future."`;
+    refDiv.textContent = "Jeremiah 29:11";
+  }
+
+  // Add fade-in animation classes after slight delay for smoothness
+  setTimeout(() => {
+    verseDiv.classList.add("visible");
+    refDiv.classList.add("visible");
+  }, 100);
+}
+
+    
   </script>
 
 </body>
